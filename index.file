@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JurisConsult Pro | Moroccan LegalTech Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --primary: #1a73e8;
+            --dark-blue: #0d47a1;
+            --bg: #f8f9fa;
+            --white: #ffffff;
+            --text: #202124;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; display: flex; color: var(--text); }
+
+        /* Sidebar Design */
+        .sidebar { width: var(--sidebar-width); background: var(--dark-blue); height: 100vh; color: white; padding: 20px; position: fixed; }
+        .sidebar h2 { font-size: 1.2rem; margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .nav-item { padding: 12px; margin: 8px 0; cursor: pointer; border-radius: 8px; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
+        .nav-item:hover { background: rgba(255,255,255,0.1); }
+        .active { background: var(--primary); }
+
+        /* Main Content */
+        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 40px; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+
+        .card { background: var(--white); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+
+        /* Form elements */
+        label { font-weight: 600; font-size: 0.85rem; color: #5f6368; display: block; margin-bottom: 8px; }
+        input { width: 100%; padding: 12px; border: 1px solid #dadce0; border-radius: 8px; margin-bottom: 20px; box-sizing: border-box; }
+        
+        button { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%; transition: 0.2s; }
+        button:hover { background: #1557b0; }
+
+        /* AI & Results Styling */
+        .ai-badge { background: #e8f0fe; color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+        #pdf-content { padding: 20px; background: white; }
+        .lang-switch { background: none; border: 1px solid #dadce0; color: var(--text); width: auto; font-size: 0.8rem; padding: 5px 10px; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2><i class="fas fa-balance-scale"></i> JurisConsult Pro</h2>
+    <div class="nav-item active"><i class="fas fa-calculator"></i> <span id="nav-calc">Calculateur</span></div>
+    <div class="nav-item"><i class="fas fa-robot"></i> <span id="nav-ai">Assistant IA</span></div>
+    <div class="nav-item"><i class="fas fa-file-contract"></i> <span id="nav-docs">Documents</span></div>
+    <div class="nav-item" style="margin-top: auto; color: #ffcc00;"><i class="fas fa-crown"></i> Version Business</div>
+</div>
+
+<div class="main-content">
+    <header>
+        <h1 id="title-main">Tableau de Bord Juridique</h1>
+        <select class="lang-switch" onchange="switchLang(this.value)">
+            <option value="fr">Français</option>
+            <option value="en">English</option>
+        </select>
+    </header>
+
+    <div class="grid">
+        <div class="card" id="pdf-area">
+            <h3><i class="fas fa-chart-line"></i> <span id="card-calc-title">Estimation Art. 53</span></h3>
+            <label id="label-salary">Salaire Mensuel Net (MAD)</label>
+            <input type="number" id="salary" placeholder="ex: 8000">
+
+            <label id="label-seniority">Ancienneté (Années)</label>
+            <input type="number" id="seniority" placeholder="ex: 5">
+
+            <button onclick="runApp()">Générer l'Analyse Complète</button>
+
+            <div id="result-display" style="display:none; margin-top:30px; border-top:1px solid #eee; padding-top:20px;">
+                <h2 style="color:var(--primary); margin:0;" id="final-amount">0.00 MAD</h2>
+                <p id="result-desc" style="color:#5f6368; font-size:0.9rem;">Indemnité de licenciement légale calculée selon le Code du Travail marocain.</p>
+                <button onclick="downloadPDF()" style="background:#34a853; margin-top:10px;"><i class="fas fa-download"></i> Télécharger le Rapport PDF</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><span class="ai-badge">SMART DIAGNOSTIC</span></h3>
+            <div id="ai-insights">
+                <p style="font-size:0.85rem; color:#5f6368;" id="ai-intro">Entrez vos données pour activer l'analyse prédictive de l'IA.</p>
+            </div>
+            <div id="lead-module" style="display:none; margin-top:20px;">
+                <div style="background:#fff9c4; padding:15px; border-radius:8px; border:1px solid #fff176;">
+                    <strong style="font-size:0.8rem;"><i class="fas fa-exclamation-triangle"></i> RISQUE DÉTECTÉ</strong>
+                    <p style="font-size:0.75rem; margin:5px 0;" id="lead-text">Ce dossier nécessite une expertise humaine pour optimiser les dommages-intérêts.</p>
+                    <button onclick="alert('Mise en relation avec un avocat...')" style="background:var(--dark-blue); font-size:0.8rem;">Contacter un Expert</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const translations = {
+        fr: {
+            title: "Tableau de Bord Juridique",
+            salary: "Salaire Mensuel Net (MAD)",
+            seniority: "Ancienneté (Années)",
+            btn: "Générer l'Analyse Complète",
+            navCalc: "Calculateur",
+            navAI: "Assistant IA"
+        },
+        en: {
+            title: "Legal Dashboard",
+            salary: "Net Monthly Salary (MAD)",
+            seniority: "Seniority (Years)",
+            btn: "Generate Full Analysis",
+            navCalc: "Calculator",
+            navAI: "AI Assistant"
+        }
+    };
+
+    function switchLang(lang) {
+        document.getElementById('title-main').innerText = translations[lang].title;
+        document.getElementById('label-salary').innerText = translations[lang].salary;
+        document.getElementById('label-seniority').innerText = translations[lang].seniority;
+        document.getElementById('nav-calc').innerText = translations[lang].navCalc;
+        document.getElementById('nav-ai').innerText = translations[lang].navAI;
+    }
+
+    function runApp() {
+        const salary = parseFloat(document.getElementById('salary').value);
+        const years = parseFloat(document.getElementById('seniority').value);
+        
+        if(!salary || !years) return alert("Données manquantes");
+
+        // Calcul Art. 53
+        const hourlyRate = salary / 191;
+        let total = 0;
+        if (years <= 5) total = (96 * hourlyRate) * years;
+        else if (years <= 10) total = (96 * hourlyRate * 5) + (144 * hourlyRate * (years - 5));
+        else total = (96 * hourlyRate * 5) + (144 * hourlyRate * 5) + (192 * hourlyRate * (years - 10));
+
+        // Affichage
+        document.getElementById('result-display').style.display = "block";
+        document.getElementById('final-amount').innerText = Math.round(total).toLocaleString() + " MAD";
+
+        // Simulation IA
+        const aiBox = document.getElementById('ai-insights');
+        aiBox.innerHTML = `
+            <div style="font-size:0.9rem; border-left:3px solid var(--primary); padding-left:10px;">
+                <strong>Analyse IA :</strong> Basé sur l'Art. 53, votre indemnité est de ${Math.round(total)} MAD. 
+                Vérifiez si l'entretien préalable (Art. 62) a été respecté.
+            </div>
+        `;
+
+        // Logique Business Lead Gen
+        if(total > 8000) {
+            document.getElementById('lead-module').style.display = "block";
+        }
+    }
+
+    function downloadPDF() {
+        const element = document.getElementById('pdf-area');
+        const opt = {
+            margin: 1,
+            filename: 'Rapport_JurisConsult.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
+    }
+</script>
+
+</body>
+</html>
