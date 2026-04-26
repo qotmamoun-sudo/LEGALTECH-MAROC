@@ -3,100 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>3adalapourtous.ma | Excellence Juridique</title>
+    <title>3ADALA | Excellence Juridique Marocaine</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
     
     <style>
         :root { 
-            --navy: #1a237e; /* Bleu Marine sérieux */
-            --gold: #c5a059; /* Or discret pour le côté premium */
+            --navy: #0a192f; /* Bleu nuit profond */
+            --gold: #b89552; /* Or satiné */
             --slate: #455a64; 
-            --bg: #fdfdfd; 
-            --white: #ffffff;
+            --bg: #ffffff; 
             --nav-height: 75px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Montserrat', sans-serif;
             background: var(--bg); 
             margin: 0; 
-            color: #2c3e50;
-            letter-spacing: -0.01em;
+            color: var(--navy);
+        }
+
+        /* --- LOGO DESIGN --- */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(184, 149, 82, 0.3);
+        }
+
+        .logo-main {
+            font-family: 'Cinzel', serif; /* Style "Luxe/Juridique" */
+            font-size: 1.4rem;
+            letter-spacing: 4px;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .logo-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #ffffff;
+            opacity: 0.8;
         }
 
         /* --- NAVIGATION --- */
-        .sidebar { background: var(--navy); color: white; position: fixed; z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.1); }
+        .sidebar { background: var(--navy); color: white; position: fixed; z-index: 1000; }
 
         @media (min-width: 769px) {
-            .sidebar { width: 280px; height: 100vh; padding: 40px 25px; display: flex; flex-direction: column; left: 0; top: 0; }
-            .main-content { margin-left: 280px; padding: 60px; }
-            .nav-item { padding: 15px; margin: 10px 0; display: flex; align-items: center; gap: 15px; border-radius: 6px; cursor: pointer; transition: 0.2s; font-weight: 500; }
-            .sidebar h2 { font-size: 1.1rem; margin-bottom: 40px; text-align: center; color: var(--gold); letter-spacing: 2px; font-weight: 700; text-transform: uppercase; }
+            .sidebar { width: 300px; height: 100vh; padding: 50px 30px; display: flex; flex-direction: column; left: 0; top: 0; }
+            .main-content { margin-left: 300px; padding: 80px; }
+            .nav-item { padding: 18px; margin: 12px 0; display: flex; align-items: center; gap: 15px; border-radius: 4px; cursor: pointer; transition: 0.3s; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; }
         }
 
         @media (max-width: 768px) {
-            .sidebar { bottom: 0; left: 0; width: 100%; height: var(--nav-height); display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #e0e0e0; background: #fff; color: var(--navy); }
-            .sidebar h2 { display: none; }
-            .main-content { padding: 25px; padding-bottom: 100px; }
-            .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 0.75rem; font-weight: 600; color: #7f8c8d; }
-            .nav-item.active { color: var(--navy); }
-            .nav-item i { font-size: 1.3rem; margin-bottom: 4px; }
+            .sidebar { bottom: 0; left: 0; width: 100%; height: var(--nav-height); display: flex; justify-content: space-around; align-items: center; background: var(--navy); }
+            .logo-container { display: none; }
+            .main-content { padding: 30px; padding-bottom: 120px; }
+            .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 0.65rem; font-weight: 600; color: #a5b1c2; }
+            .nav-item.active { color: var(--gold); }
+            .nav-item i { font-size: 1.2rem; margin-bottom: 4px; }
         }
 
-        .nav-item:hover { background: rgba(255,255,255,0.05); }
-        .nav-item.active { background: rgba(197, 160, 89, 0.2); border-left: 4px solid var(--gold); }
-        @media (max-width: 768px) { .nav-item.active { border-left: none; border-top: 3px solid var(--navy); background: none; } }
+        .nav-item:hover { color: var(--gold); }
+        .nav-item.active { background: rgba(184, 149, 82, 0.1); border-left: 3px solid var(--gold); color: var(--gold); }
+        @media (max-width: 768px) { .nav-item.active { border-left: none; background: none; } }
 
-        /* --- CONTENU --- */
-        .tab-content { display: none; max-width: 750px; margin: 0 auto; animation: fadeIn 0.4s ease; }
-        .tab-content.active-section { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
+        /* --- CARDS & TITRES --- */
         .card { 
-            background: var(--white); 
-            border-radius: 4px; 
-            padding: 35px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03); 
-            margin-bottom: 25px;
-            border: 1px solid #eee;
+            background: #fff; border-radius: 2px; padding: 45px; 
+            box-shadow: 0 15px 45px rgba(0,0,0,0.03); 
+            margin-bottom: 30px; border: 1px solid #f0f0f0;
         }
 
-        h3 { margin-top: 0; color: var(--navy); font-size: 1.4rem; font-weight: 700; border-bottom: 2px solid var(--gold); display: inline-block; padding-bottom: 8px; margin-bottom: 30px; }
+        h3 { 
+            font-family: 'Cinzel', serif;
+            margin-top: 0; color: var(--navy); font-size: 1.2rem; font-weight: 700; 
+            letter-spacing: 1px; margin-bottom: 40px; text-align: center;
+        }
 
         /* --- FORMULAIRES --- */
-        label { display: block; margin-bottom: 10px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: var(--slate); letter-spacing: 0.5px; }
+        label { display: block; margin-bottom: 12px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; color: var(--gold); letter-spacing: 1.5px; }
         input, select, textarea { 
-            width: 100%; padding: 15px; margin-bottom: 25px; 
-            border: 1px solid #dcdde1; border-radius: 0; 
-            font-size: 1rem; color: #2f3640;
-            background: #fff; transition: border 0.3s;
+            width: 100%; padding: 18px; margin-bottom: 30px; 
+            border: 1px solid #e2e8f0; border-radius: 0; 
+            font-size: 0.95rem; background: #fafafa;
         }
-        input:focus { border-color: var(--navy); outline: none; }
+        input:focus { border-color: var(--gold); outline: none; background: #fff; }
 
         button { 
-            background: var(--navy); color: white; border: none; 
-            padding: 18px; border-radius: 0; width: 100%; 
-            font-weight: 700; font-size: 0.9rem; cursor: pointer;
-            text-transform: uppercase; letter-spacing: 1px;
-            transition: 0.3s;
+            background: var(--navy); color: white; border: 1px solid var(--gold); 
+            padding: 20px; border-radius: 0; width: 100%; 
+            font-weight: 600; font-size: 0.8rem; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 3px; transition: 0.4s;
         }
-        button:hover { background: #000051; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        button:hover { background: var(--gold); color: var(--navy); }
 
         .result-area { 
-            margin-top: 30px; padding: 25px; 
-            background: #f8f9fa; border: 1px solid #e0e0e0;
-            display: none; text-align: center;
+            margin-top: 40px; padding: 30px; border: 1px double var(--gold);
+            display: none; text-align: center; background: #fff;
         }
 
+        /* Header Mobile Logo */
         .header-mobile {
             display: none;
-            padding: 20px; text-align: center; background: white;
-            font-weight: 700; color: var(--navy); border-bottom: 1px solid #eee;
-            letter-spacing: 2px; font-size: 0.9rem;
+            padding: 25px; text-align: center; background: var(--navy);
+            color: var(--gold); font-family: 'Cinzel', serif; letter-spacing: 3px; font-size: 1rem;
         }
         @media (max-width: 768px) { .header-mobile { display: block; } }
 
@@ -104,58 +122,62 @@
 </head>
 <body>
 
-    <div class="header-mobile">3ADALAPOURTOUS.MA</div>
+    <div class="header-mobile">3ADALA</div>
 
     <div class="sidebar">
-        <h2>3ADALA</h2>
+        <div class="logo-container">
+            <span class="logo-main">3ADALA</span>
+            <span class="logo-sub">POURTOUS.MA</span>
+        </div>
+        
         <div class="nav-item active" onclick="showTab('tab-calc', this)">
-            <i class="fas fa-calculator"></i> <span class="nav-text">SIMULATEUR</span>
+            <i class="fas fa-calculator"></i> <span class="nav-text">Simulateur</span>
         </div>
         <div class="nav-item" onclick="showTab('tab-conseil', this)">
-            <i class="fas fa-gavel"></i> <span class="nav-text">ANALYSE IA</span>
+            <i class="fas fa-fingerprint"></i> <span class="nav-text">Audit IA</span>
         </div>
         <div class="nav-item" onclick="showTab('tab-docs', this)">
-            <i class="fas fa-file-alt"></i> <span class="nav-text">DOCUMENTS</span>
+            <i class="fas fa-file-contract"></i> <span class="nav-text">Documents</span>
         </div>
     </div>
 
     <div class="main-content">
         <div id="tab-calc" class="tab-content active-section">
             <div class="card">
-                <h3>Estimation des Indemnités</h3>
-                <label>Rémunération Mensuelle Nette (MAD)</label>
-                <input type="number" id="salary" inputmode="numeric" placeholder="Saisissez votre salaire actuel">
+                <h3>Calcul des Indemnités</h3>
+                <label>Salaire Brut de Référence (MAD)</label>
+                <input type="number" id="salary" inputmode="numeric" placeholder="Montant mensuel">
                 
-                <label>Ancienneté Révolue (Années)</label>
-                <input type="number" id="seniority" inputmode="numeric" placeholder="Ex: 8">
+                <label>Années de Service</label>
+                <input type="number" id="seniority" inputmode="numeric" placeholder="Nombre d'années complètes">
 
-                <label>Circonstance du départ</label>
+                <label>Nature du Départ</label>
                 <select id="reason">
-                    <option value="licenciement">Rupture à l'initiative de l'employeur</option>
-                    <option value="demission">Rupture à l'initiative du salarié</option>
+                    <option value="licenciement">Licenciement Institutionnel</option>
+                    <option value="demission">Démission Volontaire</option>
                 </select>
 
-                <button onclick="calculateRights()">Lancer la simulation</button>
+                <button onclick="calculateRights()">Exécuter l'Analyse</button>
                 <div id="res-calc" class="result-area"></div>
             </div>
         </div>
 
         <div id="tab-conseil" class="tab-content">
             <div class="card">
-                <h3>Audit Juridique Digital</h3>
-                <p style="font-size: 0.9rem; color: #7f8c8d; margin-bottom: 25px;">Décrivez les faits de manière précise pour une pré-analyse de conformité.</p>
-                <textarea id="ai-question" rows="4" placeholder="Détaillez votre situation ici..."></textarea>
-                <button onclick="askAdvice()" style="background:var(--slate);">Générer l'analyse</button>
+                <h3>Intelligence Conformité</h3>
+                <label>Exposé des faits juridiques</label>
+                <textarea id="ai-question" rows="5" placeholder="Décrivez votre situation contractuelle..."></textarea>
+                <button onclick="askAdvice()">Solliciter l'IA</button>
                 <div id="res-advice" class="result-area"></div>
             </div>
         </div>
 
         <div id="tab-docs" class="tab-content">
             <div class="card">
-                <h3>Éditeur de Documents</h3>
-                <label>Identité Complète</label>
-                <input type="text" id="user-name" placeholder="Nom et Prénom du demandeur">
-                <button onclick="generateDoc()">Exporter le rapport officiel (PDF)</button>
+                <h3>Génération Documentaire</h3>
+                <label>Nom complet du titulaire</label>
+                <input type="text" id="user-name" placeholder="IDENTITÉ OFFICIELLE">
+                <button onclick="generateDoc()">Éditer le certificat (PDF)</button>
             </div>
         </div>
     </div>
@@ -166,7 +188,6 @@
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.getElementById(tabId).classList.add('active-section');
         element.classList.add('active');
-        window.scrollTo(0,0);
     }
 
     function calculateRights() {
@@ -179,30 +200,27 @@
 
         res.style.display = "block";
         if(r === "demission") {
-            res.innerHTML = "<p style='color: #c0392b; font-weight: 700;'>L'indemnité compensatrice n'est pas applicable dans ce cadre.</p>";
+            res.innerHTML = "<p style='font-size:0.85rem; letter-spacing:1px;'>Aucune indemnité compensatrice n'est due dans ce scénario.</p>";
         } else {
             const h = s / 191;
             let t = (y <= 5) ? (96*h*y) : (y <= 10) ? (96*h*5 + 144*h*(y-5)) : (96*h*5 + 144*h*5 + 192*h*(y-10));
-            res.innerHTML = `Estimation de la compensation : <br><span style="font-size: 1.8rem; color: var(--navy); font-weight: 800;">${Math.round(t).toLocaleString()} DH</span>`;
+            res.innerHTML = `<span style="font-size: 0.7rem; color: var(--gold); letter-spacing: 2px;">RÉSULTAT DE L'AUDIT</span><br><span style="font-size: 1.6rem; color: var(--navy); font-weight: 700;">${Math.round(t).toLocaleString()} MAD</span>`;
         }
     }
 
     function askAdvice() {
-        const q = document.getElementById('ai-question').value;
         const res = document.getElementById('res-advice');
-        if(!q) return;
         res.style.display = "block";
-        res.innerHTML = "<em>Traitement des données en cours...</em>";
+        res.innerHTML = "<em>Traitement algorithmique...</em>";
         setTimeout(() => {
-            res.innerHTML = "<div style='text-align:left;'><strong>Analyse Préliminaire :</strong><br>Votre situation nécessite une vérification de la procédure de notification. Un non-respect des délais légaux pourrait invalider la décision.</div>";
+            res.innerHTML = "<p style='font-size:0.9rem; text-align:justify;'><strong>Note d'analyse :</strong> La conformité de la procédure dépend de la notification formelle. Nous préconisons la vérification des délais de préavis contractuels.</p>";
         }, 1200);
     }
 
     function generateDoc() {
         const n = document.getElementById('user-name').value;
-        if(!n) return alert("Veuillez renseigner votre identité.");
-        const element = document.body;
-        html2pdf().from(element).save(`3ADALA_RAPPORT_${n.toUpperCase()}.pdf`);
+        if(!n) return alert("Identité requise.");
+        html2pdf().from(document.body).save(`3ADALA_CERT_OFFICIEL.pdf`);
     }
 </script>
 </body>
