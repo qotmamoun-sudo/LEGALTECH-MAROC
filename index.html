@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>3ADALA | Excellence Juridique Marocaine</title>
+    <title>3ADALA | Multi-Language Legal Platform</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -28,24 +28,21 @@
             transition: direction 0.3s ease;
         }
 
-        /* --- LOGIQUE RTL (ARABE) --- */
+        /* Mode Arabe (Right to Left) */
         body.rtl { direction: rtl; font-family: 'Amiri', serif; }
         body.rtl .sidebar { left: auto; right: 0; border-left: 1px solid rgba(184, 149, 82, 0.3); border-right: none; }
         body.rtl .main-content { margin-left: 0; margin-right: 300px; }
-        body.rtl .nav-item i { margin-left: 12px; margin-right: 0; }
-        body.rtl .nav-item.active { border-left: none; border-right: 4px solid var(--gold); }
-        
+        body.rtl .nav-item i { margin-left: 15px; margin-right: 0; }
         @media (max-width: 768px) {
             body.rtl .main-content { margin-right: 0; }
-            body.rtl .nav-item.active { border-right: none; border-top: 3px solid var(--gold); }
         }
 
-        /* --- SIDEBAR --- */
+        /* --- SIDEBAR & LOGO --- */
         .sidebar { background: var(--navy); color: white; position: fixed; z-index: 1000; transition: all 0.3s; }
 
         @media (min-width: 769px) {
             .sidebar { width: 300px; height: 100vh; padding: 40px 25px; display: flex; flex-direction: column; left: 0; top: 0; }
-            .main-content { margin-left: 300px; padding: 60px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+            .main-content { margin-left: 300px; padding: 60px; min-height: 100vh; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
         }
 
         @media (max-width: 768px) {
@@ -54,36 +51,34 @@
             .logo-container, .lang-selector-container { display: none; }
         }
 
-        .logo-container { text-align: center; margin-bottom: 40px; border-bottom: 1px solid rgba(184, 149, 82, 0.2); padding-bottom: 20px; }
-        .logo-main { font-family: 'Cinzel', serif; font-size: 1.5rem; letter-spacing: 5px; color: var(--gold); }
+        .logo-container { text-align: center; margin-bottom: 30px; }
+        .logo-main { font-family: 'Cinzel', serif; font-size: 1.4rem; letter-spacing: 4px; color: var(--gold); display: block; }
 
-        /* --- LANG SELECTOR --- */
+        /* --- LANGUAGE SELECTOR --- */
         .lang-selector-container { margin-bottom: 30px; }
         .lang-select { 
             width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--gold); 
-            color: white; padding: 12px; cursor: pointer; outline: none; font-size: 0.75rem; text-transform: uppercase;
+            color: white; padding: 10px; cursor: pointer; outline: none; font-size: 0.8rem;
         }
 
-        /* --- NAV ITEMS --- */
-        .nav-item { padding: 16px; margin: 4px 0; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.3s; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #a5b1c2; }
-        .nav-item i { width: 20px; text-align: center; }
-        .nav-item.active { background: rgba(184, 149, 82, 0.1); border-left: 4px solid var(--gold); color: var(--gold); }
-        .nav-item:hover { color: var(--white); }
+        /* --- NAVIGATION --- */
+        .nav-item { padding: 15px; margin: 5px 0; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.3s; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #a5b1c2; }
+        .nav-item.active { background: rgba(184, 149, 82, 0.1); border-left: 3px solid var(--gold); color: var(--gold); }
 
-        /* --- CARDS & TABS --- */
-        .card { background: #fff; padding: 45px; box-shadow: 0 25px 60px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; width: 100%; max-width: 800px; }
-        .tab-content { display: none; animation: fadeIn 0.5s ease forwards; }
+        /* --- CONTENT CARDS --- */
+        .card { background: #fff; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.04); border: 1px solid #f0f0f0; width: 100%; max-width: 800px; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active-section { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        h1, h3 { font-family: 'Cinzel', serif; text-align: center; color: var(--navy); margin-bottom: 30px; letter-spacing: 2px; }
-        .cta-button { background: var(--navy); color: white; border: 1px solid var(--gold); padding: 20px; width: 100%; cursor: pointer; text-transform: uppercase; letter-spacing: 3px; transition: 0.4s; font-weight: 600; font-size: 0.8rem; }
+        h1, h3 { font-family: 'Cinzel', serif; text-align: center; color: var(--navy); }
+        .cta-button { background: var(--navy); color: white; border: 1px solid var(--gold); padding: 18px; width: 100%; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; transition: 0.4s; margin-top: 20px; }
         .cta-button:hover { background: var(--gold); color: var(--navy); }
 
-        input, select, textarea { width: 100%; padding: 15px; margin-bottom: 25px; border: 1px solid #e2e8f0; background: #fafafa; font-family: inherit; font-size: 1rem; }
-        label { display: block; margin-bottom: 10px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--gold); letter-spacing: 1.5px; }
+        input, select, textarea { width: 100%; padding: 15px; margin-bottom: 20px; border: 1px solid #e2e8f0; background: #fafafa; font-family: inherit; }
+        label { display: block; margin-bottom: 8px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--gold); letter-spacing: 1px; }
 
-        .header-mobile { display: none; padding: 20px; background: var(--navy); color: var(--gold); text-align: center; font-family: 'Cinzel', serif; letter-spacing: 4px; }
+        .header-mobile { display: none; padding: 15px; background: var(--navy); color: var(--gold); text-align: center; font-family: 'Cinzel', serif; }
         @media (max-width: 768px) { .header-mobile { display: block; } }
 
     </style>
@@ -98,25 +93,18 @@
         </div>
 
         <div class="lang-selector-container">
+            <label style="color: #fff; font-size: 0.6rem; margin-bottom: 5px;">Language / Langue / اللغة</label>
             <select class="lang-select" onchange="changeLanguage(this.value)">
-                <option value="fr">FRANÇAIS</option>
-                <option value="en">ENGLISH</option>
+                <option value="fr">Français</option>
+                <option value="en">English</option>
                 <option value="ar">العربية</option>
             </select>
         </div>
         
-        <div class="nav-item active" onclick="showTab('tab-home', this)" data-key="nav-home">
-            <i class="fas fa-home"></i> <span>Accueil</span>
-        </div>
-        <div class="nav-item" onclick="showTab('tab-calc', this)" data-key="nav-calc">
-            <i class="fas fa-calculator"></i> <span>Simulateur</span>
-        </div>
-        <div class="nav-item" onclick="showTab('tab-conseil', this)" data-key="nav-ia">
-            <i class="fas fa-gavel"></i> <span>Audit IA</span>
-        </div>
-        <div class="nav-item" onclick="showTab('tab-docs', this)" data-key="nav-docs">
-            <i class="fas fa-file-invoice"></i> <span>Documents</span>
-        </div>
+        <div class="nav-item active" onclick="showTab('tab-home', this)" data-key="nav-home">Accueil</div>
+        <div class="nav-item" onclick="showTab('tab-calc', this)" data-key="nav-calc">Simulateur</div>
+        <div class="nav-item" onclick="showTab('tab-conseil', this)" data-key="nav-ia">Audit IA</div>
+        <div class="nav-item" onclick="showTab('tab-docs', this)" data-key="nav-docs">Documents</div>
     </div>
 
     <div class="main-content">
@@ -124,11 +112,8 @@
         <div id="tab-home" class="tab-content active-section">
             <div class="card">
                 <h1 data-key="home-title">L'Excellence Juridique</h1>
-                <p style="text-align:center; line-height:1.8; color: var(--slate); margin-bottom: 40px;" data-key="home-desc">
-                    La première plateforme digitale dédiée à l'accompagnement et à la démocratisation du Droit du Travail au Maroc. 
-                    3ADALA combine rigueur législative et innovation technologique.
-                </p>
-                <button class="cta-button" onclick="startApp()" data-key="btn-start">Commencer l'Analyse</button>
+                <p style="text-align:center; line-height:1.6;" data-key="home-desc">La plateforme digitale dédiée à la démocratisation du Droit du Travail au Maroc.</p>
+                <button class="cta-button" onclick="showTab('tab-calc', document.querySelectorAll('.nav-item')[1])" data-key="btn-start">Commencer</button>
             </div>
         </div>
 
@@ -136,30 +121,29 @@
             <div class="card">
                 <h3 data-key="calc-title">Simulateur d'Indemnités</h3>
                 <label data-key="label-salary">Salaire Mensuel Net (MAD)</label>
-                <input type="number" id="salary" placeholder="Ex: 8000">
+                <input type="number" id="salary" placeholder="...">
                 <label data-key="label-years">Ancienneté (Années)</label>
-                <input type="number" id="seniority" placeholder="Ex: 5">
-                <button class="cta-button" onclick="calculateRights()" data-key="btn-calc">Calculer mes droits</button>
-                <div id="res-calc" style="margin-top:30px; padding:25px; border:1px double var(--gold); display:none; text-align:center;"></div>
+                <input type="number" id="seniority" placeholder="...">
+                <button class="cta-button" onclick="calculateRights()" data-key="btn-calc">Calculer</button>
+                <div id="res-calc" style="margin-top:20px; padding:20px; border:1px double var(--gold); display:none; text-align:center;"></div>
             </div>
         </div>
 
         <div id="tab-conseil" class="tab-content">
             <div class="card">
                 <h3 data-key="ia-title">Audit Algorithmique</h3>
-                <label data-key="ia-placeholder">Description de votre situation</label>
-                <textarea id="ai-question" rows="6" placeholder="Détaillez les faits..."></textarea>
-                <button class="cta-button" onclick="askAdvice()" data-key="btn-audit">Lancer l'audit digital</button>
-                <div id="res-advice" style="margin-top:30px; padding:25px; background:#fcfcfc; border:1px solid #eee; display:none;"></div>
+                <textarea id="ai-question" rows="5" data-key-placeholder="ia-placeholder" placeholder="Décrivez votre situation..."></textarea>
+                <button class="cta-button" onclick="askAdvice()" data-key="btn-audit">Analyser</button>
+                <div id="res-advice" style="margin-top:20px; padding:20px; background:#f9f9f9; display:none;"></div>
             </div>
         </div>
 
         <div id="tab-docs" class="tab-content">
             <div class="card">
-                <h3 data-key="doc-title">Rapport de Synthèse</h3>
-                <label data-key="label-name">Identité complète du demandeur</label>
-                <input type="text" id="user-name" placeholder="Nom et Prénom">
-                <button class="cta-button" onclick="generateDoc()" data-key="btn-pdf">Générer le rapport PDF</button>
+                <h3 data-key="doc-title">Rapport Officiel</h3>
+                <label data-key="label-name">Identité complète</label>
+                <input type="text" id="user-name" placeholder="...">
+                <button class="cta-button" onclick="generateDoc()" data-key="btn-pdf">Générer PDF</button>
             </div>
         </div>
 
@@ -169,27 +153,27 @@
     const translations = {
         fr: {
             "nav-home": "Accueil", "nav-calc": "Simulateur", "nav-ia": "Audit IA", "nav-docs": "Documents",
-            "home-title": "L'Excellence Juridique", "home-desc": "La première plateforme digitale dédiée à l'accompagnement et à la démocratisation du Droit du Travail au Maroc. 3ADALA combine rigueur législative et innovation technologique.",
-            "btn-start": "Commencer l'Analyse", "calc-title": "Simulateur d'Indemnités", "label-salary": "Salaire Mensuel Net (MAD)",
-            "label-years": "Ancienneté (Années)", "btn-calc": "Calculer mes droits", "ia-title": "Audit Algorithmique",
-            "ia-placeholder": "Description de votre situation", "btn-audit": "Lancer l'audit digital", "doc-title": "Rapport de Synthèse",
-            "label-name": "Identité complète du demandeur", "btn-pdf": "Générer le rapport PDF"
+            "home-title": "L'Excellence Juridique", "home-desc": "La plateforme digitale dédiée à la démocratisation du Droit du Travail au Maroc.",
+            "btn-start": "Commencer", "calc-title": "Simulateur d'Indemnités", "label-salary": "Salaire Mensuel Net (MAD)",
+            "label-years": "Ancienneté (Années)", "btn-calc": "Calculer les droits", "ia-title": "Audit Algorithmique",
+            "ia-placeholder": "Décrivez votre situation...", "btn-audit": "Lancer l'audit", "doc-title": "Rapport Officiel",
+            "label-name": "Identité complète", "btn-pdf": "Générer PDF"
         },
         en: {
             "nav-home": "Home", "nav-calc": "Simulator", "nav-ia": "AI Audit", "nav-docs": "Documents",
-            "home-title": "Legal Excellence", "home-desc": "The leading digital platform dedicated to democratizing Labor Law in Morocco. 3ADALA combines legislative rigor and technological innovation.",
-            "btn-start": "Begin Analysis", "calc-title": "Compensation Simulator", "label-salary": "Net Monthly Salary (MAD)",
+            "home-title": "Legal Excellence", "home-desc": "The digital platform dedicated to democratizing Labor Law in Morocco.",
+            "btn-start": "Get Started", "calc-title": "Compensation Simulator", "label-salary": "Net Monthly Salary (MAD)",
             "label-years": "Years of Service", "btn-calc": "Calculate Rights", "ia-title": "Algorithmic Audit",
-            "ia-placeholder": "Description of your situation", "btn-audit": "Launch Digital Audit", "doc-title": "Summary Report",
-            "label-name": "Applicant's Full Identity", "btn-pdf": "Generate PDF Report"
+            "ia-placeholder": "Describe your situation...", "btn-audit": "Start Audit", "doc-title": "Official Report",
+            "label-name": "Full Identity", "btn-pdf": "Generate PDF"
         },
         ar: {
             "nav-home": "الرئيسية", "nav-calc": "المحاكي", "nav-ia": "تدقيق الذكاء الاصطناعي", "nav-docs": "الوثائق",
-            "home-title": "التميز القانوني", "home-desc": "المنصة الرقمية الأولى المخصصة لتبسيط قانون الشغل في المغرب. تجمع عدالة بين الصرامة القانونية والابتكار التكنولوجي.",
-            "btn-start": "بدء التحليل", "calc-title": "محاكي التعويضات", "label-salary": "الراتب الشهري الصافي (درهم)",
+            "home-title": "التميز القانوني", "home-desc": "المنصة الرقمية المخصصة لتبسيط قانون الشغل في المغرب.",
+            "btn-start": "ابدأ الآن", "calc-title": "محاكي التعويضات", "label-salary": "الراتب الشهري الصافي (درهم)",
             "label-years": "الأقدمية (سنوات)", "btn-calc": "حساب المستحقات", "ia-title": "التدقيق الخوارزمي",
-            "ia-placeholder": "وصف وضعيتك القانونية", "btn-audit": "بدء التدقيق الرقمي", "doc-title": "تقرير التلخيص",
-            "label-name": "الاسم الكامل لصاحب الطلب", "btn-pdf": "تحميل التقرير (PDF)"
+            "ia-placeholder": "صف وضعيتك القانونية...", "btn-audit": "بدء التدقيق", "doc-title": "تقرير رسمي",
+            "label-name": "الاسم الكامل", "btn-pdf": "تحميل PDF"
         }
     };
 
@@ -199,14 +183,11 @@
         else body.classList.remove('rtl');
 
         document.querySelectorAll('[data-key]').forEach(el => {
-            const key = el.getAttribute('data-key');
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                el.placeholder = translations[lang][key];
-            } else {
-                // Keep icon if it exists
-                const icon = el.querySelector('i');
-                el.innerHTML = (icon ? icon.outerHTML + ' ' : '') + translations[lang][key];
-            }
+            el.innerText = translations[lang][el.getAttribute('data-key')];
+        });
+        
+        document.querySelectorAll('[data-key-placeholder]').forEach(el => {
+            el.placeholder = translations[lang][el.getAttribute('data-key-placeholder')];
         });
     }
 
@@ -215,35 +196,28 @@
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.getElementById(tabId).classList.add('active-section');
         if(element) element.classList.add('active');
-        window.scrollTo(0,0);
-    }
-
-    function startApp() {
-        showTab('tab-calc', document.querySelectorAll('.nav-item')[1]);
     }
 
     function calculateRights() {
         const s = parseFloat(document.getElementById('salary').value);
         const y = parseFloat(document.getElementById('seniority').value);
         const res = document.getElementById('res-calc');
-        if(!s || !y) return alert("Veuillez remplir tous les champs.");
+        if(!s || !y) return alert("Data missing");
         const h = s / 191;
         let t = (y <= 5) ? (96*h*y) : (y <= 10) ? (96*h*5 + 144*h*(y-5)) : (96*h*5 + 144*h*5 + 192*h*(y-10));
         res.style.display = "block";
-        res.innerHTML = `<span style="font-size:0.7rem; letter-spacing:2px; color:var(--gold);">ESTIMATION LÉGALE</span><br><br><span style="font-size:1.8rem; font-weight:700;">${Math.round(t).toLocaleString()} MAD</span>`;
+        res.innerHTML = `<strong>${Math.round(t).toLocaleString()} MAD</strong>`;
     }
 
     function askAdvice() {
         const res = document.getElementById('res-advice');
         res.style.display = "block";
-        res.innerHTML = "<em>Traitement des données juridiques en cours...</em>";
-        setTimeout(() => { res.innerHTML = "<strong>Analyse terminée :</strong> Votre situation nécessite une vérification de la procédure d'entretien préalable (Art. 62)."; }, 1200);
+        res.innerHTML = "<em>Analysis in progress...</em>";
+        setTimeout(() => { res.innerHTML = "Analyse terminée. Conformité à vérifier selon l'Art. 62."; }, 1000);
     }
 
     function generateDoc() {
-        const n = document.getElementById('user-name').value;
-        if(!n) return alert("Veuillez saisir votre nom.");
-        html2pdf().from(document.body).save(`3ADALA_RAPPORT_${n.toUpperCase()}.pdf`);
+        html2pdf().from(document.body).save(`3ADALA_REPORT.pdf`);
     }
 </script>
 </body>
