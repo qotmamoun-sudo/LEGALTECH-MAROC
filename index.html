@@ -208,46 +208,28 @@
     </div>
 
 <script>
-    function showTab(tabId, element) {
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-section'));
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active-section');
-        if(element) element.classList.add('active');
-        window.scrollTo(0,0);
-    }
+   <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- ... Toute la partie Style (CSS) ... -->
+</head>
+<body id="body-tag">
 
-    function calculateRights() {
-        const s = parseFloat(document.getElementById('salary').value);
-        const y = parseFloat(document.getElementById('seniority').value);
-        const r = document.getElementById('reason').value;
-        const res = document.getElementById('res-calc');
+    <!-- ... Toute la partie Contenu (HTML) ... -->
 
-        if(!s || !y) return alert("Données manquantes.");
-
-        res.style.display = "block";
-        if(r === "demission") {
-            res.innerHTML = "<p>Aucune indemnité légale n'est exigible pour ce motif.</p>";
-        } else {
-            const h = s / 191;
-            let t = (y <= 5) ? (96*h*y) : (y <= 10) ? (96*h*5 + 144*h*(y-5)) : (96*h*5 + 144*h*5 + 192*h*(y-10));
-            res.innerHTML = `<span style="font-size: 0.6rem; color: var(--gold); letter-spacing: 2px;">AUDIT TERMINÉ</span><br><br><span style="font-size: 1.5rem; font-weight: 700;">${Math.round(t).toLocaleString()} MAD</span>`;
+    <!-- C'EST ICI QUE TU COLLES LE CODE SCRIPT -->
+    <script>
+        const translations = { ... };
+        function changeLanguage(lang) { ... }
+        // ...
+        async function askAdvice() {
+            // Ton code avec le Token Hugging Face
         }
-    }
+        // ...
+    </script>
 
-    function askAdvice() {
-        const res = document.getElementById('res-advice');
-        res.style.display = "block";
-        res.innerHTML = "<em>Analyse en cours...</em>";
-        setTimeout(() => {
-            res.innerHTML = "<p style='text-align:justify;'><strong>Pré-Analyse :</strong> Le respect de l'entretien préalable est un critère de validité majeur. Un manquement procédural peut entraîner une requalification du départ.</p>";
-        }, 1200);
-    }
-
-    function generateDoc() {
-        const n = document.getElementById('user-name').value;
-        if(!n) return alert("Nom requis.");
-        html2pdf().from(document.body).save(`3ADALA_RAPPORT.pdf`);
-    }
+</body>
+</html>
 </script>
 </body>
 </html>
