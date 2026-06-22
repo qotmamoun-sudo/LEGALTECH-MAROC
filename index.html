@@ -26,65 +26,78 @@
             margin: 0; 
             color: var(--navy);
             overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* --- SÉLECTEUR DE LANGUE --- */
+        .lang-switch {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            z-index: 2000;
+        }
+        .lang-switch select {
+            padding: 8px 12px;
+            background: var(--bg);
+            border: 1px solid var(--gold);
+            color: var(--navy);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 2px;
+            outline: none;
+            margin-bottom: 0;
+            width: auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .lang-switch { top: 12px; right: 15px; }
+            .lang-switch select { padding: 5px 8px; font-size: 0.8rem; }
         }
 
         /* --- LOGO DESIGN --- */
-        .logo-container {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(184, 149, 82, 0.3);
-        }
-
-        .logo-main {
-            font-family: 'Cinzel', serif;
-            font-size: 1.4rem;
-            letter-spacing: 4px;
-            color: var(--gold);
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .logo-sub {
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #ffffff;
-            opacity: 0.8;
-        }
+        .logo-container { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(184, 149, 82, 0.3); }
+        .logo-main { font-family: 'Cinzel', serif; font-size: 1.4rem; letter-spacing: 4px; color: var(--gold); display: block; margin-bottom: 5px; }
+        .logo-sub { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: #ffffff; opacity: 0.8; }
 
         /* --- NAVIGATION --- */
-        .sidebar { background: var(--navy); color: white; position: fixed; z-index: 1000; }
+        .sidebar { background: var(--navy); color: white; position: fixed; z-index: 1000; transition: 0.3s ease; }
 
         @media (min-width: 769px) {
             .sidebar { width: 300px; height: 100vh; padding: 50px 30px; display: flex; flex-direction: column; left: 0; top: 0; }
-            .main-content { margin-left: 300px; padding: 60px; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-            .nav-item { padding: 18px; margin: 8px 0; display: flex; align-items: center; gap: 15px; border-radius: 4px; cursor: pointer; transition: 0.3s; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
+            .main-content { margin-left: 300px; padding: 60px; min-height: 100vh; display: flex; align-items: center; justify-content: center; transition: 0.3s ease; }
+            .nav-item { padding: 18px; margin: 8px 0; display: flex; align-items: center; gap: 15px; border-radius: 4px; cursor: pointer; transition: 0.3s; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; border-left: 3px solid transparent; }
+            .nav-item.active { background: rgba(184, 149, 82, 0.1); border-left: 3px solid var(--gold); color: var(--gold); }
+            
+            /* GESTION RTL (ARABE) BUREAU */
+            html[dir="rtl"] .sidebar { left: auto; right: 0; }
+            html[dir="rtl"] .main-content { margin-left: 0; margin-right: 300px; }
+            html[dir="rtl"] .nav-item { border-left: none; border-right: 3px solid transparent; }
+            html[dir="rtl"] .nav-item.active { border-left: none; border-right: 3px solid var(--gold); }
+            html[dir="rtl"] .lang-switch { right: auto; left: 30px; }
         }
 
         @media (max-width: 768px) {
             .sidebar { bottom: 0; left: 0; width: 100%; height: var(--nav-height); display: flex; justify-content: space-around; align-items: center; background: var(--navy); }
             .logo-container { display: none; }
-            .main-content { padding: 25px; padding-bottom: 120px; }
+            .main-content { padding: 25px; padding-bottom: 120px; padding-top: 80px; }
             .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 0.6rem; font-weight: 600; color: #a5b1c2; }
             .nav-item.active { color: var(--gold); }
             .nav-item i { font-size: 1.1rem; margin-bottom: 4px; }
+            
+            /* GESTION RTL (ARABE) MOBILE */
+            html[dir="rtl"] .lang-switch { right: auto; left: 15px; }
         }
 
         .nav-item:hover { color: var(--gold); }
-        .nav-item.active { background: rgba(184, 149, 82, 0.1); border-left: 3px solid var(--gold); color: var(--gold); }
-        @media (max-width: 768px) { .nav-item.active { border-left: none; background: none; } }
 
         /* --- CONTENU --- */
         .tab-content { display: none; width: 100%; max-width: 850px; animation: fadeIn 0.5s ease; }
         .tab-content.active-section { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card { 
-            background: #fff; border-radius: 2px; padding: 50px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.04); 
-            border: 1px solid #f0f0f0;
-        }
+        .card { background: #fff; border-radius: 2px; padding: 50px; box-shadow: 0 20px 50px rgba(0,0,0,0.04); border: 1px solid #f0f0f0; }
         @media (max-width: 768px) { .card { padding: 30px 20px; } }
 
         /* --- HOME PAGE SPECIFICS --- */
@@ -94,6 +107,8 @@
         .home-hero p { font-size: 1.1rem; color: var(--slate); font-weight: 300; line-height: 1.7; max-width: 600px; margin: 0 auto; }
         
         .stats-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin: 40px 0; padding: 30px; background: #fafafa; border: 1px solid #f0f0f0; border-left: 4px solid var(--gold); }
+        html[dir="rtl"] .stats-container { border-left: none; border-right: 4px solid var(--gold); }
+        
         .stat-item { text-align: center; }
         .stat-item h2 { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold); margin: 0; }
         .stat-item p { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--navy); font-weight: 600; margin: 5px 0 0 0; }
@@ -101,6 +116,7 @@
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 50px 0; }
         .feature-item { text-align: center; padding: 30px 20px; border: 1px solid #eee; transition: 0.4s; background: #fff; position: relative; overflow: hidden; }
         .feature-item::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gold); transform: scaleX(0); transition: 0.4s; transform-origin: left; }
+        html[dir="rtl"] .feature-item::before { transform-origin: right; }
         .feature-item:hover::before { transform: scaleX(1); }
         .feature-item:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.04); border-color: transparent; }
         .feature-item i { font-size: 2rem; color: var(--gold); margin-bottom: 20px; }
@@ -108,15 +124,17 @@
         .feature-item p { font-size: 0.85rem; color: #7f8c8d; margin: 0; line-height: 1.6; }
 
         .trust-banner { background: var(--navy); color: white; padding: 40px; text-align: center; margin: 50px 0; border-radius: 2px; border-left: 4px solid var(--gold); position: relative; overflow: hidden; }
+        html[dir="rtl"] .trust-banner { border-left: none; border-right: 4px solid var(--gold); }
         .trust-banner::after { content: '\f24e'; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; right: -20px; bottom: -30px; font-size: 8rem; opacity: 0.05; color: var(--gold); }
+        html[dir="rtl"] .trust-banner::after { right: auto; left: -20px; }
         .trust-banner h4 { font-family: 'Cinzel', serif; color: var(--gold); margin-top: 0; letter-spacing: 2px; font-size: 1.2rem; }
         .trust-banner p { font-size: 0.9rem; opacity: 0.9; margin-bottom: 0; line-height: 1.6; font-weight: 300; }
 
-        /* Testimonials Section */
         .testimonials { margin-top: 50px; }
         .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
         .testi-card { padding: 25px; border: 1px solid #f0f0f0; background: #fafafa; position: relative; }
         .testi-card i.fa-quote-right { position: absolute; top: 20px; right: 20px; color: rgba(184, 149, 82, 0.15); font-size: 2rem; }
+        html[dir="rtl"] .testi-card i.fa-quote-right { right: auto; left: 20px; transform: scaleX(-1); }
         .testi-text { font-style: italic; font-size: 0.85rem; color: var(--slate); line-height: 1.6; margin-bottom: 20px; position: relative; z-index: 1; }
         .testi-author { font-size: 0.8rem; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 1px; }
         .testi-role { font-size: 0.65rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-top: 5px; }
@@ -141,10 +159,18 @@
         .result-area { margin-top: 30px; padding: 25px; border: 1px double var(--gold); display: none; text-align: center; background: #fff; font-size: 0.9rem; }
 
         .header-mobile { display: none; padding: 20px; text-align: center; background: var(--navy); color: var(--gold); font-family: 'Cinzel', serif; letter-spacing: 3px; font-size: 0.9rem; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        @media (max-width: 768px) { .header-mobile { display: block; } .sidebar { padding-top: 60px; } .main-content { padding-top: 80px; } }
+        @media (max-width: 768px) { .header-mobile { display: block; } }
     </style>
 </head>
 <body>
+
+    <div class="lang-switch">
+        <select id="lang-select" onchange="changeLanguage(this.value)">
+            <option value="fr">FR</option>
+            <option value="en">EN</option>
+            <option value="ar">العربية</option>
+        </select>
+    </div>
 
     <div class="header-mobile">3ADALA</div>
 
@@ -155,16 +181,16 @@
         </div>
         
         <div class="nav-item active" onclick="showTab('tab-home', this)">
-            <i class="fas fa-home"></i> <span class="nav-text">Accueil</span>
+            <i class="fas fa-home"></i> <span class="nav-text" data-i18n="nav_home">Accueil</span>
         </div>
         <div class="nav-item" onclick="showTab('tab-calc', this)">
-            <i class="fas fa-calculator"></i> <span class="nav-text">Simulateur</span>
+            <i class="fas fa-calculator"></i> <span class="nav-text" data-i18n="nav_calc">Simulateur</span>
         </div>
         <div class="nav-item" onclick="showTab('tab-conseil', this)">
-            <i class="fas fa-fingerprint"></i> <span class="nav-text">Audit IA</span>
+            <i class="fas fa-fingerprint"></i> <span class="nav-text" data-i18n="nav_ai">Audit IA</span>
         </div>
         <div class="nav-item" onclick="showTab('tab-docs', this)">
-            <i class="fas fa-file-contract"></i> <span class="nav-text">Documents</span>
+            <i class="fas fa-file-contract"></i> <span class="nav-text" data-i18n="nav_docs">Documents</span>
         </div>
     </div>
 
@@ -175,94 +201,74 @@
             <div class="card">
                 
                 <div class="home-hero">
-                    <span class="badge"><i class="fas fa-star" style="margin-right:5px;"></i> Plateforme N°1 au Maroc</span>
-                    <h1>L'Excellence Juridique<br>pour Tous</h1>
-                    <p>La première plateforme digitale dédiée à la démocratisation du Droit du Travail au Maroc. 3ADALA combine expertise juridique et intelligence technologique.</p>
+                    <span class="badge"><i class="fas fa-star" style="margin-right:5px;"></i> <span data-i18n="hero_badge">Plateforme N°1 au Maroc</span></span>
+                    <h1 data-i18n="hero_title">L'Excellence Juridique<br>pour Tous</h1>
+                    <p data-i18n="hero_desc">La première plateforme digitale dédiée à la démocratisation du Droit du Travail au Maroc. 3ADALA combine expertise juridique et intelligence technologique.</p>
                 </div>
 
-                <button class="cta-button primary" onclick="showTab('tab-calc', document.querySelectorAll('.nav-item')[1])">Démarrer une Simulation Gratuite</button>
+                <button class="cta-button primary" onclick="showTab('tab-calc', document.querySelectorAll('.nav-item')[1])" data-i18n="btn_start_sim">Démarrer une Simulation Gratuite</button>
 
-                <!-- NOUVEAU : Statistiques de réassurance -->
                 <div class="stats-container">
                     <div class="stat-item">
                         <h2>100%</h2>
-                        <p>Conforme Loi 65-99</p>
+                        <p data-i18n="stat_1">Conforme Loi 65-99</p>
                     </div>
                     <div class="stat-item">
                         <h2>2 min</h2>
-                        <p>Temps d'audit moyen</p>
+                        <p data-i18n="stat_2">Temps d'audit moyen</p>
                     </div>
                     <div class="stat-item">
                         <h2>24/7</h2>
-                        <p>Disponibilité IA</p>
+                        <p data-i18n="stat_3">Disponibilité IA</p>
                     </div>
                 </div>
 
                 <div class="feature-grid">
                     <div class="feature-item">
                         <i class="fas fa-balance-scale"></i>
-                        <h4>Conformité Absolue</h4>
-                        <p>Analyses basées strictement sur le Code du Travail marocain et la jurisprudence en vigueur.</p>
+                        <h4 data-i18n="feat_1_title">Conformité Absolue</h4>
+                        <p data-i18n="feat_1_desc">Analyses basées strictement sur le Code du Travail marocain et la jurisprudence en vigueur.</p>
                     </div>
                     <div class="feature-item">
                         <i class="fas fa-shield-alt"></i>
-                        <h4>Confidentialité</h4>
-                        <p>Vos données sont traitées de manière totalement anonyme et ne sont jamais stockées.</p>
+                        <h4 data-i18n="feat_2_title">Confidentialité</h4>
+                        <p data-i18n="feat_2_desc">Vos données sont traitées de manière totalement anonyme et ne sont jamais stockées.</p>
                     </div>
                     <div class="feature-item">
                         <i class="fas fa-robot"></i>
-                        <h4>Intelligence Artificielle</h4>
-                        <p>Notre algorithme identifie les failles procédurales de votre situation avec précision.</p>
+                        <h4 data-i18n="feat_3_title">Intelligence Artificielle</h4>
+                        <p data-i18n="feat_3_desc">Notre algorithme identifie les failles procédurales de votre situation avec précision.</p>
                     </div>
                 </div>
 
                 <div class="trust-banner">
-                    <h4>Code du Travail Marocain</h4>
-                    <p>Nos algorithmes de calcul et d'analyse sont calibrés sur les textes officiels publiés au Bulletin Officiel du Royaume du Maroc. Vous garantissant une exactitude à l'échelle du dirham près.</p>
+                    <h4 data-i18n="trust_title">Code du Travail Marocain</h4>
+                    <p data-i18n="trust_desc">Nos algorithmes de calcul et d'analyse sont calibrés sur les textes officiels publiés au Bulletin Officiel du Royaume du Maroc. Vous garantissant une exactitude à l'échelle du dirham près.</p>
                 </div>
 
                 <div class="how-it-works">
-                    <h3>Comment utiliser 3ADALA ?</h3>
+                    <h3 data-i18n="how_title">Comment utiliser 3ADALA ?</h3>
                     <div class="steps-container">
                         <div class="step-item">
                             <div class="step-number">01</div>
                             <div class="step-text">
-                                <h4>Évaluation Financière</h4>
-                                <p>Utilisez notre simulateur pour calculer précisément vos indemnités légales (licenciement, préavis, congés payés, dommages et intérêts) selon votre ancienneté et votre statut.</p>
+                                <h4 data-i18n="step_1_title">Évaluation Financière</h4>
+                                <p data-i18n="step_1_desc">Utilisez notre simulateur pour calculer précisément vos indemnités légales selon votre ancienneté et votre statut.</p>
                             </div>
                         </div>
                         <div class="step-item">
                             <div class="step-number">02</div>
                             <div class="step-text">
-                                <h4>Diagnostic par Intelligence Artificielle</h4>
-                                <p>Soumettez votre situation litigieuse à notre IA juridique. Elle identifiera les potentiels manquements de l'employeur.</p>
+                                <h4 data-i18n="step_2_title">Diagnostic par Intelligence Artificielle</h4>
+                                <p data-i18n="step_2_desc">Soumettez votre situation litigieuse à notre IA juridique. Elle identifiera les potentiels manquements de l'employeur.</p>
                             </div>
                         </div>
                         <div class="step-item">
                             <div class="step-number">03</div>
                             <div class="step-text">
-                                <h4>Génération du Rapport Officiel</h4>
-                                <p>Exportez un dossier PDF complet et structuré, prêt à être utilisé lors d'une conciliation à l'inspection du travail ou remis à votre avocat.</p>
+                                <h4 data-i18n="step_3_title">Génération du Rapport Officiel</h4>
+                                <p data-i18n="step_3_desc">Exportez un dossier PDF complet et structuré, prêt à être utilisé lors d'une conciliation ou remis à votre avocat.</p>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- NOUVEAU : Témoignages / Preuve sociale -->
-                <div class="testimonials">
-                    <h3>Ils font confiance à 3ADALA</h3>
-                    <div class="testimonials-grid">
-                        <div class="testi-card">
-                            <i class="fas fa-quote-right"></i>
-                            <div class="testi-text">"Une plateforme incroyablement précise. J'ai pu calculer mes indemnités de licenciement avant même mon rendez-vous avec l'inspecteur du travail."</div>
-                            <div class="testi-author">Karim B.</div>
-                            <span class="testi-role">Salarié, Casablanca</span>
-                        </div>
-                        <div class="testi-card">
-                            <i class="fas fa-quote-right"></i>
-                            <div class="testi-text">"L'audit IA m'a permis de comprendre que la procédure de mon entreprise n'était pas conforme. Un gain de temps et d'argent inestimable."</div>
-                            <div class="testi-author">Salma M.</div>
-                            <span class="testi-role">Cadre Supérieur, Rabat</span>
                         </div>
                     </div>
                 </div>
@@ -273,30 +279,30 @@
         <!-- ONGLET SIMULATEUR -->
         <div id="tab-calc" class="tab-content">
             <div class="card">
-                <h3>Simulateur de Compensation</h3>
+                <h3 data-i18n="calc_title">Simulateur de Compensation</h3>
                 
-                <label>Statut de l'employé</label>
+                <label data-i18n="calc_status">Statut de l'employé</label>
                 <select id="status">
-                    <option value="employe">Employé / Ouvrier</option>
-                    <option value="cadre">Cadre</option>
+                    <option value="employe" data-i18n="opt_emp">Employé / Ouvrier</option>
+                    <option value="cadre" data-i18n="opt_cadre">Cadre</option>
                 </select>
 
-                <label>Rémunération Mensuelle Nette (MAD)</label>
-                <input type="number" id="salary" inputmode="numeric" placeholder="Montant perçu">
+                <label data-i18n="calc_salary">Rémunération Mensuelle Nette (MAD)</label>
+                <input type="number" id="salary" inputmode="numeric" data-i18n-placeholder="calc_ph_salary" placeholder="Montant perçu">
                 
-                <label>Ancienneté (Années révolues)</label>
-                <input type="number" id="seniority" inputmode="numeric" placeholder="Ex: 12">
+                <label data-i18n="calc_seniority">Ancienneté (Années révolues)</label>
+                <input type="number" id="seniority" inputmode="numeric" data-i18n-placeholder="calc_ph_seniority" placeholder="Ex: 12">
 
-                <label>Congés payés non pris (Jours)</label>
-                <input type="number" id="holidays" inputmode="numeric" placeholder="Ex: 5" value="0">
+                <label data-i18n="calc_holidays">Congés payés non pris (Jours)</label>
+                <input type="number" id="holidays" inputmode="numeric" data-i18n-placeholder="calc_ph_holidays" placeholder="Ex: 5" value="0">
 
-                <label>Nature de la rupture</label>
+                <label data-i18n="calc_reason">Nature de la rupture</label>
                 <select id="reason">
-                    <option value="licenciement">Licenciement abusif (Rupture employeur)</option>
-                    <option value="demission">Démission (Rupture salarié)</option>
+                    <option value="licenciement" data-i18n="opt_lic">Licenciement abusif (Rupture employeur)</option>
+                    <option value="demission" data-i18n="opt_dem">Démission (Rupture salarié)</option>
                 </select>
 
-                <button class="cta-button" onclick="calculateRights()">Calculer les Indemnités</button>
+                <button class="cta-button" onclick="calculateRights()" data-i18n="btn_calc">Calculer les Indemnités</button>
                 <div id="res-calc" class="result-area"></div>
             </div>
         </div>
@@ -304,10 +310,10 @@
         <!-- ONGLET AUDIT IA -->
         <div id="tab-conseil" class="tab-content">
             <div class="card">
-                <h3>Diagnostic Algorithmique</h3>
-                <label>Veuillez décrire votre situation</label>
-                <textarea id="ai-question" rows="5" placeholder="Ex: Mon employeur a baissé mon salaire sans mon accord de 10% le mois dernier..."></textarea>
-                <button class="cta-button" onclick="askAdvice()">Lancer l'Audit</button>
+                <h3 data-i18n="ai_title">Diagnostic Algorithmique</h3>
+                <label data-i18n="ai_label">Veuillez décrire votre situation</label>
+                <textarea id="ai-question" rows="5" data-i18n-placeholder="ai_ph" placeholder="Ex: Mon employeur a baissé mon salaire sans mon accord..."></textarea>
+                <button class="cta-button" onclick="askAdvice()" data-i18n="btn_ai">Lancer l'Audit</button>
                 <div id="res-advice" class="result-area"></div>
             </div>
         </div>
@@ -315,12 +321,12 @@
         <!-- ONGLET DOCUMENTS -->
         <div id="tab-docs" class="tab-content">
             <div class="card">
-                <h3>Édition Documentaire</h3>
-                <label>Identité du titulaire</label>
-                <input type="text" id="user-name" placeholder="NOM ET PRÉNOM">
+                <h3 data-i18n="doc_title">Édition Documentaire</h3>
+                <label data-i18n="doc_label">Identité du titulaire</label>
+                <input type="text" id="user-name" data-i18n-placeholder="doc_ph" placeholder="NOM ET PRÉNOM">
                 
                 <div id="pdf-template" style="display:none;">
-                    <div style="padding: 40px; font-family: 'Montserrat', sans-serif; color: #0a192f;">
+                    <div style="padding: 40px; font-family: 'Montserrat', sans-serif; color: #0a192f; direction: ltr; text-align: left;">
                         <h1 style="font-family: 'Cinzel', serif; color: #b89552; text-align: center;">RAPPORT 3ADALA</h1>
                         <hr style="border: 1px solid #b89552; margin-bottom: 30px;">
                         <p><strong>Titulaire :</strong> <span id="pdf-name"></span></p>
@@ -330,13 +336,109 @@
                     </div>
                 </div>
 
-                <button class="cta-button" onclick="generateDoc()">Exporter le Rapport (PDF)</button>
+                <button class="cta-button" onclick="generateDoc()" data-i18n="btn_doc">Exporter le Rapport (PDF)</button>
             </div>
         </div>
 
     </div>
 
 <script>
+    // --- DICTIONNAIRE MULTILINGUE ---
+    const translations = {
+        fr: {
+            nav_home: "Accueil", nav_calc: "Simulateur", nav_ai: "Audit IA", nav_docs: "Documents",
+            hero_badge: "Plateforme N°1 au Maroc", hero_title: "L'Excellence Juridique<br>pour Tous",
+            hero_desc: "La première plateforme digitale dédiée à la démocratisation du Droit du Travail au Maroc. 3ADALA combine expertise juridique et intelligence technologique.",
+            btn_start_sim: "Démarrer une Simulation Gratuite",
+            stat_1: "Conforme Loi 65-99", stat_2: "Temps d'audit moyen", stat_3: "Disponibilité IA",
+            feat_1_title: "Conformité Absolue", feat_1_desc: "Analyses basées strictement sur le Code du Travail marocain et la jurisprudence en vigueur.",
+            feat_2_title: "Confidentialité", feat_2_desc: "Vos données sont traitées de manière totalement anonyme et ne sont jamais stockées.",
+            feat_3_title: "Intelligence Artificielle", feat_3_desc: "Notre algorithme identifie les failles procédurales de votre situation avec précision.",
+            trust_title: "Code du Travail Marocain", trust_desc: "Nos algorithmes de calcul et d'analyse sont calibrés sur les textes officiels publiés au Bulletin Officiel du Royaume du Maroc.",
+            how_title: "Comment utiliser 3ADALA ?", 
+            step_1_title: "Évaluation Financière", step_1_desc: "Utilisez notre simulateur pour calculer précisément vos indemnités légales selon votre ancienneté et votre statut.",
+            step_2_title: "Diagnostic par Intelligence Artificielle", step_2_desc: "Soumettez votre situation litigieuse à notre IA juridique. Elle identifiera les potentiels manquements de l'employeur.",
+            step_3_title: "Génération du Rapport Officiel", step_3_desc: "Exportez un dossier PDF complet et structuré, prêt à être utilisé lors d'une conciliation ou remis à votre avocat.",
+            calc_title: "Simulateur de Compensation", calc_status: "Statut de l'employé", opt_emp: "Employé / Ouvrier", opt_cadre: "Cadre",
+            calc_salary: "Rémunération Mensuelle Nette (MAD)", calc_ph_salary: "Montant perçu",
+            calc_seniority: "Ancienneté (Années révolues)", calc_ph_seniority: "Ex: 12",
+            calc_holidays: "Congés payés non pris (Jours)", calc_ph_holidays: "Ex: 5",
+            calc_reason: "Nature de la rupture", opt_lic: "Licenciement abusif", opt_dem: "Démission",
+            btn_calc: "Calculer les Indemnités",
+            ai_title: "Diagnostic Algorithmique", ai_label: "Veuillez décrire votre situation", ai_ph: "Ex: Mon employeur a baissé mon salaire sans mon accord...", btn_ai: "Lancer l'Audit",
+            doc_title: "Édition Documentaire", doc_label: "Identité du titulaire", doc_ph: "NOM ET PRÉNOM", btn_doc: "Exporter le Rapport (PDF)"
+        },
+        en: {
+            nav_home: "Home", nav_calc: "Simulator", nav_ai: "AI Audit", nav_docs: "Documents",
+            hero_badge: "Morocco's #1 Platform", hero_title: "Legal Excellence<br>For Everyone",
+            hero_desc: "The first digital platform dedicated to democratizing Labor Law in Morocco. 3ADALA combines legal expertise and technological intelligence.",
+            btn_start_sim: "Start a Free Simulation",
+            stat_1: "Compliant with Law 65-99", stat_2: "Average audit time", stat_3: "AI Availability",
+            feat_1_title: "Absolute Compliance", feat_1_desc: "Analyses based strictly on the Moroccan Labor Code and current jurisprudence.",
+            feat_2_title: "Confidentiality", feat_2_desc: "Your data is treated entirely anonymously and is never stored.",
+            feat_3_title: "Artificial Intelligence", feat_3_desc: "Our algorithm accurately identifies procedural flaws in your situation.",
+            trust_title: "Moroccan Labor Code", trust_desc: "Our calculation and analysis algorithms are calibrated on official texts published in the Official Bulletin of the Kingdom of Morocco.",
+            how_title: "How to use 3ADALA?", 
+            step_1_title: "Financial Evaluation", step_1_desc: "Use our simulator to accurately calculate your legal severance pay based on your seniority and status.",
+            step_2_title: "Artificial Intelligence Diagnosis", step_2_desc: "Submit your litigious situation to our legal AI. It will identify potential employer breaches.",
+            step_3_title: "Official Report Generation", step_3_desc: "Export a complete and structured PDF file, ready to be used during conciliation or given to your lawyer.",
+            calc_title: "Compensation Simulator", calc_status: "Employee Status", opt_emp: "Employee / Worker", opt_cadre: "Executive",
+            calc_salary: "Net Monthly Salary (MAD)", calc_ph_salary: "Amount received",
+            calc_seniority: "Seniority (Completed years)", calc_ph_seniority: "Ex: 12",
+            calc_holidays: "Untaken paid leave (Days)", calc_ph_holidays: "Ex: 5",
+            calc_reason: "Nature of termination", opt_lic: "Unfair dismissal", opt_dem: "Resignation",
+            btn_calc: "Calculate Indemnities",
+            ai_title: "Algorithmic Diagnosis", ai_label: "Please describe your situation", ai_ph: "Ex: My employer reduced my salary without my consent...", btn_ai: "Start Audit",
+            doc_title: "Document Edition", doc_label: "Holder's Identity", doc_ph: "FULL NAME", btn_doc: "Export Report (PDF)"
+        },
+        ar: {
+            nav_home: "الرئيسية", nav_calc: "المحاكي", nav_ai: "تدقيق الذكاء الاصطناعي", nav_docs: "المستندات",
+            hero_badge: "المنصة رقم 1 في المغرب", hero_title: "التميز القانوني<br>للجميع",
+            hero_desc: "أول منصة رقمية مخصصة لدمقرطة قانون الشغل في المغرب. تجمع 3ADALA بين الخبرة القانونية والذكاء التكنولوجي.",
+            btn_start_sim: "ابدأ محاكاة مجانية",
+            stat_1: "مطابق للقانون 65-99", stat_2: "متوسط وقت التدقيق", stat_3: "توفر الذكاء الاصطناعي",
+            feat_1_title: "امتثال مطلق", feat_1_desc: "تحليلات تستند بدقة إلى مدونة الشغل المغربية والاجتهاد القضائي الحالي.",
+            feat_2_title: "السرية", feat_2_desc: "يتم التعامل مع بياناتك بشكل مجهول تمامًا ولا يتم تخزينها أبدًا.",
+            feat_3_title: "الذكاء الاصطناعي", feat_3_desc: "تحدد خوارزميتنا بدقة الثغرات الإجرائية في وضعك.",
+            trust_title: "مدونة الشغل المغربية", trust_desc: "تتم معايرة خوارزميات الحساب والتحليل الخاصة بنا على النصوص الرسمية المنشورة في الجريدة الرسمية للمملكة المغربية.",
+            how_title: "كيف تستخدم 3ADALA؟", 
+            step_1_title: "التقييم المالي", step_1_desc: "استخدم المحاكي الخاص بنا لحساب تعويضاتك القانونية بدقة بناءً على أقدميتك وحالتك.",
+            step_2_title: "تشخيص الذكاء الاصطناعي", step_2_desc: "اعرض وضعك النزاعي على الذكاء الاصطناعي القانوني لدينا. سيحدد الانتهاكات المحتملة لصاحب العمل.",
+            step_3_title: "إنشاء التقرير الرسمي", step_3_desc: "قم بتصدير ملف PDF كامل ومنظم، جاهز للاستخدام أثناء المصالحة أو تسليمه لمحاميك.",
+            calc_title: "محاكي التعويضات", calc_status: "حالة الموظف", opt_emp: "عامل / مستخدم", opt_cadre: "إطار",
+            calc_salary: "الراتب الشهري الصافي (درهم)", calc_ph_salary: "المبلغ المستلم",
+            calc_seniority: "الأقدمية (سنوات مكتملة)", calc_ph_seniority: "مثال: 12",
+            calc_holidays: "الإجازات المدفوعة غير المأخوذة (أيام)", calc_ph_holidays: "مثال: 5",
+            calc_reason: "طبيعة إنهاء العقد", opt_lic: "فصل تعسفي", opt_dem: "استقالة",
+            btn_calc: "حساب التعويضات",
+            ai_title: "التشخيص الخوارزمي", ai_label: "يرجى وصف وضعك", ai_ph: "مثال: قام صاحب العمل بتخفيض راتبي دون موافقتي...", btn_ai: "بدء التدقيق",
+            doc_title: "تحرير المستندات", doc_label: "هوية صاحب الطلب", doc_ph: "الاسم الكامل", btn_doc: "تصدير التقرير (PDF)"
+        }
+    };
+
+    function changeLanguage(lang) {
+        // Change text direction for Arabic
+        document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+        document.documentElement.lang = lang;
+
+        // Update all translation keys
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang][key]) {
+                el.innerHTML = translations[lang][key];
+            }
+        });
+
+        // Update placeholders
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (translations[lang][key]) {
+                el.placeholder = translations[lang][key];
+            }
+        });
+    }
+
+    // --- LOGIQUE EXISTANTE ---
     function showTab(tabId, element) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-section'));
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -353,7 +455,7 @@
         const status = document.getElementById('status').value;
         const res = document.getElementById('res-calc');
 
-        if(!s || !y) return alert("Veuillez remplir le salaire et l'ancienneté.");
+        if(!s || !y) return alert("Veuillez remplir les champs requis / Please fill required fields");
 
         res.style.display = "block";
         const dailySalary = s / 26; 
@@ -361,9 +463,8 @@
 
         if(r === "demission") {
             res.innerHTML = `
-                <span style="font-size: 0.6rem; color: var(--gold); letter-spacing: 2px;">RÉSULTAT DÉMISSION</span><br><br>
-                <p>Aucune indemnité de licenciement n'est due.</p>
-                <p>Indemnité compensatrice de congés payés : <strong>${Math.round(holidayPay).toLocaleString()} MAD</strong></p>
+                <span style="font-size: 0.6rem; color: var(--gold); letter-spacing: 2px;">RÉSULTAT / RESULT</span><br><br>
+                <p>Indemnité de congés payés / Paid leave : <strong>${Math.round(holidayPay).toLocaleString()} MAD</strong></p>
                 <br><span style="font-size: 1.2rem; font-weight: 700;">TOTAL : ${Math.round(holidayPay).toLocaleString()} MAD</span>`;
         } else {
             const hourlyRate = s / 191;
@@ -372,18 +473,16 @@
                                  (96*hourlyRate*5 + 144*hourlyRate*5 + 192*hourlyRate*(y-10));
             
             let noticeMonths = 0;
-            if(status === 'cadre') {
-                noticeMonths = (y < 1) ? 1 : (y <= 5) ? 2 : 3;
-            } else {
-                noticeMonths = (y < 1) ? 0.25 : (y <= 5) ? 1 : 2;
-            }
+            if(status === 'cadre') { noticeMonths = (y < 1) ? 1 : (y <= 5) ? 2 : 3; } 
+            else { noticeMonths = (y < 1) ? 0.25 : (y <= 5) ? 1 : 2; }
+            
             const noticePay = s * noticeMonths;
             const damagesMonths = Math.min(y * 1.5, 36);
             const damagesPay = s * damagesMonths;
             const total = legalIndemnity + noticePay + damagesPay + holidayPay;
 
             res.innerHTML = `
-                <span style="font-size: 0.6rem; color: var(--gold); letter-spacing: 2px;">AUDIT TERMINÉ</span><br><br>
+                <span style="font-size: 0.6rem; color: var(--gold); letter-spacing: 2px;">AUDIT TERMINÉ / COMPLETED</span><br><br>
                 <div style="text-align: left; font-size: 0.8rem; margin-bottom: 15px; color: var(--slate);">
                     • Indemnité légale : ${Math.round(legalIndemnity).toLocaleString()} MAD<br>
                     • Préavis (${noticeMonths} mois) : ${Math.round(noticePay).toLocaleString()} MAD<br>
@@ -397,38 +496,27 @@
     async function askAdvice() {
         const question = document.getElementById('ai-question').value;
         const res = document.getElementById('res-advice');
-        
         if(!question) return alert("Veuillez décrire la situation.");
-
         res.style.display = "block";
-        res.innerHTML = "<i class='fas fa-spinner fa-spin' style='color: var(--gold);'></i> <em>Interrogation du modèle juridique...</em>";
-        
+        res.innerHTML = "<i class='fas fa-spinner fa-spin' style='color: var(--gold);'></i> <em>Traitement / Processing...</em>";
         setTimeout(() => {
-            res.innerHTML = "<p style='text-align:justify;'><strong>Pré-Analyse :</strong> Le respect de l'entretien préalable est un critère de validité majeur. Un manquement procédural (comme décrit dans votre situation) peut entraîner une requalification immédiate du départ par l'inspection du travail.</p>";
+            res.innerHTML = "<p style='text-align:justify;'><strong>Pré-Analyse :</strong> Le respect de l'entretien préalable est un critère de validité majeur. Un manquement procédural peut entraîner une requalification immédiate du départ par l'inspection du travail.</p>";
         }, 1500);
     }
 
     function generateDoc() {
         const n = document.getElementById('user-name').value;
-        if(!n) return alert("Nom requis pour générer le document.");
-        
+        if(!n) return alert("Nom requis / Name required");
         document.getElementById('pdf-name').innerText = n.toUpperCase();
-        document.getElementById('pdf-date').innerText = new Date().toLocaleDateString('fr-FR');
-        
+        document.getElementById('pdf-date').innerText = new Date().toLocaleDateString();
         const template = document.getElementById('pdf-template');
         template.style.display = 'block';
-
         const opt = {
-            margin:       1,
-            filename:     `3ADALA_RAPPORT_${n.replace(/\s+/g, '_')}.pdf`,
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            margin: 1, filename: `3ADALA_RAPPORT_${n.replace(/\s+/g, '_')}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
         };
-
-        html2pdf().set(opt).from(template).save().then(() => {
-            template.style.display = 'none'; 
-        });
+        html2pdf().set(opt).from(template).save().then(() => { template.style.display = 'none'; });
     }
 </script>
 </body>
