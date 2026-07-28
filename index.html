@@ -324,6 +324,33 @@
 
                 <button class="cta-button" onclick="calculateRights()" data-i18n="btn_calc">Calculer les Indemnités</button>
                 <div id="res-calc" class="result-area"></div>
+
+                <div id="pdf-sim-template" style="display:none;">
+                    <div style="padding: 40px; font-family: 'Montserrat', sans-serif; color: #0a192f; direction: ltr; text-align: left;">
+                        <div style="text-align: center; margin-bottom: 10px;">
+                            <i class="fas fa-balance-scale" style="font-size: 2.5rem; color: #b89552;"></i>
+                        </div>
+                        <h1 style="font-family: 'Cinzel', serif; color: #b89552; text-align: center; letter-spacing: 3px; margin-top: 5px;">3ADALA</h1>
+                        <p style="text-align: center; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: #455a64; margin-top: -10px;">Rapport de Simulation - Indemnités de Fin de Contrat</p>
+                        <hr style="border: 1px solid #b89552; margin: 20px 0 30px 0;">
+
+                        <p><strong>Date d'édition :</strong> <span id="pdf-sim-date"></span></p>
+                        <p><strong>Statut de l'employé :</strong> <span id="pdf-sim-status"></span></p>
+                        <p><strong>Nature de la rupture :</strong> <span id="pdf-sim-reason"></span></p>
+
+                        <h3 style="margin-top: 30px; text-align: left; font-size: 1rem;">Détail du Calcul</h3>
+                        <div id="pdf-sim-details" style="font-size: 0.9rem; line-height: 1.8;"></div>
+
+                        <h3 style="margin-top: 30px; text-align: left; font-size: 1rem;">Certification</h3>
+                        <p style="font-size: 0.85rem; line-height: 1.7; text-align: justify;">Le présent calcul a été réalisé strictement conformément à la législation marocaine en vigueur, et plus précisément selon les dispositions du Code du Travail marocain (Loi n° 65-99 promulguée par le Dahir n° 1-03-194 du 14 rejeb 1424, 11 septembre 2003), relatives aux indemnités de licenciement, au préavis et aux congés payés.</p>
+
+                        <h3 style="margin-top: 30px; text-align: left; font-size: 1rem;">Avertissement Juridique</h3>
+                        <p style="font-size: 0.8rem; line-height: 1.7; text-align: justify; color: #455a64;">Ce document est fourni à titre purement indicatif et informatif. Il constitue une estimation automatisée basée sur les données déclarées par l'utilisateur et ne saurait se substituer à une consultation juridique personnalisée ni engager la responsabilité de 3ADALA. Pour toute démarche officielle, contentieuse ou de conciliation, il est recommandé de faire valider ce calcul par un avocat ou par l'inspection du travail compétente.</p>
+
+                        <hr style="border: 0.5px solid #e2e8f0; margin: 30px 0 10px 0;">
+                        <p style="font-size: 0.7rem; text-align: center; color: #7f8c8d;">Document généré automatiquement par la plateforme 3ADALA — POURTOUS.MA</p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -474,6 +501,8 @@
     }
 
     // --- LOGIQUE EXISTANTE ---
+    let lastSimulationData = null;
+
     function showTab(tabId, element) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-section'));
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -497,10 +526,19 @@
         const holidayPay = dailySalary * h_days;
 
         if(r === "demission") {
+            lastSimulationData = {
+                statusLabel: (status === 'cadre') ? 'Cadre' : 'Employé / Ouvrier',
+                reasonLabel: 'Démission (Rupture salarié)',
+                lines: [
+                    { label: "Indemnité de congés payés / Paid leave", value: Math.round(holidayPay) }
+                ],
+                total: Math.round(holidayPay)
+            };
             res.innerHTML = `
                 <span style="font-size: 0.6rem; color: var(--gold); letter-spacing: 2px;">RÉSULTAT / RESULT</span><br><br>
                 <p>Indemnité de congés payés / Paid leave : <strong>${Math.round(holidayPay).toLocaleString()} MAD</strong></p>
-                <br><span style="font-size: 1.2rem; font-weight: 700;">TOTAL : ${Math.round(holidayPay).toLocaleString()} MAD</span>`;
+                <br><span style="font-size: 1.2rem; font-weight: 700;">TOTAL : ${Math.round(holidayPay).toLocaleString()} MAD</span>
+                <button class="cta-button" style="margin-top: 25px;" onclick="generateSimulationPDF()"><i class="fas fa-file-pdf" style="margin-right:8px;"></i>Télécharger le Rapport PDF</button>`;
         } else {
             const hourlyRate = s / 191;
             let legalIndemnity = (y <= 5) ? (96*hourlyRate*y) : 
@@ -516,6 +554,18 @@
             const damagesPay = s * damagesMonths;
             const total = legalIndemnity + noticePay + damagesPay + holidayPay;
 
+            lastSimulationData = {
+                statusLabel: (status === 'cadre') ? 'Cadre' : 'Employé / Ouvrier',
+                reasonLabel: 'Licenciement abusif (Rupture employeur)',
+                lines: [
+                    { label: "Indemnité légale", value: Math.round(legalIndemnity) },
+                    { label: `Préavis (${noticeMonths} mois)`, value: Math.round(noticePay) },
+                    { label: "Dommages & Intérêts", value: Math.round(damagesPay) },
+                    { label: "Congés payés", value: Math.round(holidayPay) }
+                ],
+                total: Math.round(total)
+            };
+
             res.innerHTML = `
                 <span style="font-size: 0.6rem; color: var(--gold); letter-spacing: 2px;">AUDIT TERMINÉ / COMPLETED</span><br><br>
                 <div style="text-align: left; font-size: 0.8rem; margin-bottom: 15px; color: var(--slate);">
@@ -524,8 +574,33 @@
                     • Dommages & Intérêts : ${Math.round(damagesPay).toLocaleString()} MAD<br>
                     • Congés payés : ${Math.round(holidayPay).toLocaleString()} MAD
                 </div>
-                <span style="font-size: 1.5rem; font-weight: 700; color: var(--navy);">TOTAL ESTIMÉ : ${Math.round(total).toLocaleString()} MAD</span>`;
+                <span style="font-size: 1.5rem; font-weight: 700; color: var(--navy);">TOTAL ESTIMÉ : ${Math.round(total).toLocaleString()} MAD</span>
+                <button class="cta-button" style="margin-top: 25px;" onclick="generateSimulationPDF()"><i class="fas fa-file-pdf" style="margin-right:8px;"></i>Télécharger le Rapport PDF</button>`;
         }
+    }
+
+    function generateSimulationPDF() {
+        if (!lastSimulationData) return;
+
+        document.getElementById('pdf-sim-date').innerText = new Date().toLocaleDateString();
+        document.getElementById('pdf-sim-status').innerText = lastSimulationData.statusLabel;
+        document.getElementById('pdf-sim-reason').innerText = lastSimulationData.reasonLabel;
+
+        let linesHtml = '';
+        lastSimulationData.lines.forEach(line => {
+            linesHtml += `<p style="margin: 4px 0;">• ${line.label} : <strong>${line.value.toLocaleString()} MAD</strong></p>`;
+        });
+        linesHtml += `<hr style="border: 0.5px solid #e2e8f0; margin: 15px 0;"><p style="font-size: 1.1rem; font-weight: 700; color: #0a192f;">TOTAL ESTIMÉ : ${lastSimulationData.total.toLocaleString()} MAD</p>`;
+        document.getElementById('pdf-sim-details').innerHTML = linesHtml;
+
+        const template = document.getElementById('pdf-sim-template');
+        template.style.display = 'block';
+        const opt = {
+            margin: 1, filename: `3ADALA_SIMULATION_${new Date().toISOString().slice(0,10)}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(template).save().then(() => { template.style.display = 'none'; });
     }
 
     async function askAdvice() {
