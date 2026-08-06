@@ -161,6 +161,21 @@
 
         .header-mobile { display: none; padding: 20px; text-align: center; background: var(--navy); color: var(--gold); font-family: 'Cinzel', serif; letter-spacing: 3px; font-size: 0.9rem; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         @media (max-width: 768px) { .header-mobile { display: block; } }
+
+        /* --- CORRECTIF EXPORT PDF (rendu du rapport uniquement) --- */
+        /* Empêche toute coupure de bloc entre deux pages et garantit un rendu
+           typographique propre (sans glyphes corrompus) lors de la génération html2canvas/jsPDF. */
+        #pdf-sim-template, #pdf-template { font-family: Arial, Helvetica, 'Montserrat', sans-serif; }
+        #pdf-sim-template *, #pdf-template * {
+            font-family: Arial, Helvetica, 'Montserrat', sans-serif;
+            page-break-inside: avoid;
+            break-inside: avoid;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        #pdf-sim-template h1, #pdf-sim-template h3, #pdf-template h1, #pdf-template h3 {
+            font-family: 'Cinzel', serif;
+        }
     </style>
 </head>
 <body>
@@ -330,9 +345,10 @@
                         <div style="text-align: center; margin-bottom: 10px;">
                             <i class="fas fa-balance-scale" style="font-size: 2.5rem; color: #b89552;"></i>
                         </div>
-                        <h1 style="font-family: 'Cinzel', serif; color: #b89552; text-align: center; letter-spacing: 3px; margin-top: 5px;">3ADALA</h1>
-                        <p style="text-align: center; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: #455a64; margin-top: -10px;">Rapport de Simulation - Indemnités de Fin de Contrat</p>
-                        <hr style="border: 1px solid #b89552; margin: 20px 0 30px 0;">
+                        <h1 style="font-family: 'Cinzel', serif; color: #b89552; text-align: center; letter-spacing: 3px; margin-top: 5px; margin-bottom: 4px;">3ADALA</h1>
+                        <p style="text-align: center; font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; color: #455a64; margin-top: 0; margin-bottom: 12px;">POURTOUS.MA</p>
+                        <h2 style="text-align: center; font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; color: #0a192f; margin: 0 0 20px 0;">CALCUL DE L'INDEMNITÉ</h2>
+                        <hr style="border: 1px solid #b89552; margin: 0 0 30px 0;">
 
                         <p><strong>Date d'édition :</strong> <span id="pdf-sim-date"></span></p>
                         <p><strong>Statut de l'employé :</strong> <span id="pdf-sim-status"></span></p>
@@ -595,12 +611,34 @@
 
         const template = document.getElementById('pdf-sim-template');
         template.style.display = 'block';
-        const opt = {
-            margin: 1, filename: `3ADALA_SIMULATION_${new Date().toISOString().slice(0,10)}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+
+        // Attend le chargement complet des polices avant capture pour éviter
+        // tout glyphe corrompu (bug de rendu html2canvas sur police non chargée).
+        const renderPdf = () => {
+            // Calcule la hauteur réelle du contenu pour générer une page PDF
+            // à taille unique : plus aucune coupure en deux pages.
+            const widthIn = 8.5;
+            const marginIn = 0.5;
+            const contentWidthPx = template.offsetWidth || 816;
+            const contentHeightPx = template.scrollHeight;
+            const pageHeightIn = (contentHeightPx / contentWidthPx) * (widthIn - marginIn * 2) + marginIn * 2;
+
+            const opt = {
+                margin: 0.5,
+                filename: `3ADALA_SIMULATION_${new Date().toISOString().slice(0,10)}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true, allowTaint: true },
+                jsPDF: { unit: 'in', format: [widthIn, Math.max(pageHeightIn, 11)], orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+            html2pdf().set(opt).from(template).save().then(() => { template.style.display = 'none'; });
         };
-        html2pdf().set(opt).from(template).save().then(() => { template.style.display = 'none'; });
+
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(renderPdf);
+        } else {
+            renderPdf();
+        }
     }
 
     async function askAdvice() {
@@ -621,12 +659,30 @@
         document.getElementById('pdf-date').innerText = new Date().toLocaleDateString();
         const template = document.getElementById('pdf-template');
         template.style.display = 'block';
-        const opt = {
-            margin: 1, filename: `3ADALA_RAPPORT_${n.replace(/\s+/g, '_')}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+
+        const renderPdf = () => {
+            const widthIn = 8.5;
+            const marginIn = 0.5;
+            const contentWidthPx = template.offsetWidth || 816;
+            const contentHeightPx = template.scrollHeight;
+            const pageHeightIn = (contentHeightPx / contentWidthPx) * (widthIn - marginIn * 2) + marginIn * 2;
+
+            const opt = {
+                margin: 0.5,
+                filename: `3ADALA_RAPPORT_${n.replace(/\s+/g, '_')}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true, allowTaint: true },
+                jsPDF: { unit: 'in', format: [widthIn, Math.max(pageHeightIn, 11)], orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+            html2pdf().set(opt).from(template).save().then(() => { template.style.display = 'none'; });
         };
-        html2pdf().set(opt).from(template).save().then(() => { template.style.display = 'none'; });
+
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(renderPdf);
+        } else {
+            renderPdf();
+        }
     }
 </script>
 </body>
